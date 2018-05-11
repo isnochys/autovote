@@ -47,7 +47,7 @@ for autovote in votee_list:
 		c_list[c.permlink] = 1
 		if not c.is_comment():
 			counter +=1
-			if voter not in c.get_votes() and c.time_elapsed() > timedelta(mins=wait) and c.time_elapsed() < timedelta(days=6.5):
+			if voter not in c.get_votes() and c.time_elapsed() > timedelta(minutes=wait) and c.time_elapsed() < timedelta(days=6.5):
 				op = operations.Vote(
 									   **{"voter": voter,
 											  "author": c.author,
