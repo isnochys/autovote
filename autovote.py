@@ -68,4 +68,5 @@ if ops:
 	tb.appendOps(ops)
 	tx.appendSigner(signer, 'posting')
 	tx.sign()
-	tx.broadcast()
+	returncode = tx.broadcast()
+	print(returncode)
