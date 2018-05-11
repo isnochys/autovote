@@ -33,6 +33,7 @@ voter_vp = voter_account.vp
 for autovote in votee_list:
 	counter =0
 	c_list = {}
+	account = Account(autovote['author'])
 	for c in map(Comment, account.history_reverse(only_ops=["comment"])):
 		if c.permlink in c_list:
 		  continue
