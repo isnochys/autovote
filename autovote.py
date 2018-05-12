@@ -66,8 +66,8 @@ for autovote in votee_list:
 if ops:
 	stm = Steem()
 	stm.wallet.unlock(wallet_pw)
-	tb = TransactionBuilder()
-	tb.appendOps(ops)
+	tx = TransactionBuilder()
+	tx.appendOps(ops)
 	tx.appendSigner(signer, 'posting')
 	tx.sign()
 	returncode = tx.broadcast()
