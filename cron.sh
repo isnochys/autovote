@@ -3,7 +3,7 @@
 
 while getopts p:e:d: opt
 do
-   case $opt in
+   case "$opt" in
        p) pyth=$OPTARG;;
        e) pythscript=$OPTARG;;
        d) direct=$OPTARG;;
