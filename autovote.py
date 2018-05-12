@@ -19,11 +19,12 @@ votee_list=[]
 for co in config:
 	if co == 'DEFAULT':
 		voter = config[co]['voter']
+		wallet_pw = config[co]['wallet_pw']
 		if 'signer' in config[co]:
 			signer = config[co]['signer']
 		else:
 			signer = voter
-			wallet_pw = config[co]['wallet_pw']
+			
 	else:
 		votee_list.append({'author':co,'percent':config[co]['percent'],'min_vp':config[co]['min_vp'],'wait':config[co]['wait']})
 
