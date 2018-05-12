@@ -23,19 +23,18 @@ for co in config:
 		if 'signer' in config[co]:
 			signer = config[co]['signer']
 		else:
-			signer = voter
-			
+			signer = voter			
 	else:
 		votee_list.append({'author':co,'percent':config[co]['percent'],'min_vp':config[co]['min_vp'],'wait':config[co]['wait']})
 
-ops=[]
-voter_account = Account(voter)
+stm = Steem()
+voter_account = Account(voter,steem_instance=stm)
 voter_vp = voter_account.vp
 
 for autovote in votee_list:
 	counter =0
 	c_list = {}
-	account = Account(autovote['author'])
+	account = Account(autovote['author'],steem_instance=stm)
 	percent = float(autovote['percent'])
 	min_vp = float(autovote['min_vp'])
 	wait = int(autovote['wait'])
@@ -50,25 +49,17 @@ for autovote in votee_list:
 		if not c.is_comment():
 			counter +=1
 			if voter not in c.get_votes() and c.time_elapsed() > timedelta(minutes=wait) and c.time_elapsed() < timedelta(days=6.5):
-				op = operations.Vote(
-									   **{"voter": voter,
-											  "author": c.author,
-											  "permlink": c.permlink,
-											  "weight": int(percent * 100)
-										   }
-									)
+				op = operations.Vote(**{"voter": voter,"author": c.author,"permlink": c.permlink,"weight": int(percent * 100)})
+				ops=[]
 				ops.append(op)
+				stm.wallet.unlock(wallet_pw)
+				tx = TransactionBuilder(steem_instance=stm)
+				tx.appendOps(ops)
+				tx.appendSigner(signer, 'posting')
+				tx.sign()
+				returncode = tx.broadcast()
+				print(returncode)
 				voter_vp -= percent * 2 /100
 		if counter >10 or voter_vp < min_vp:
 			# going back 10 entries should be enough (50 minutes, on a spamming account e.g.)
 			break
-			
-if ops:
-	stm = Steem()
-	stm.wallet.unlock(wallet_pw)
-	tx = TransactionBuilder()
-	tx.appendOps(ops)
-	tx.appendSigner(signer, 'posting')
-	tx.sign()
-	returncode = tx.broadcast()
-	print(returncode)
