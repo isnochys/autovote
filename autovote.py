@@ -60,6 +60,6 @@ for autovote in votee_list:
 				returncode = tx.broadcast()
 				print(returncode)
 				voter_vp -= percent * 2 /100
-		if counter >10 or voter_vp < min_vp:
+		if counter >10 or voter_vp < min_vp or c.time_elapsed() > timedelta(hours=2):
 			# going back 10 entries should be enough (50 minutes, on a spamming account e.g.)
 			break
