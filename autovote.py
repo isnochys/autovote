@@ -1,5 +1,6 @@
 from beem.account import Account
 from beem.comment import Comment
+from beem.steem import Steem
 from beem.exceptions import ContentDoesNotExistsException
 from datetime import timedelta
 from beembase import operations
