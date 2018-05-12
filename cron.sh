@@ -1,10 +1,5 @@
 #!/bin/sh
 
-###
-# sh cron.sh -d /home/isnochys/reddit/reddit2tumbler -p /home/isnochys/reddit/6env/bin/python -e crawler.py
-#
-# instead of: cd /home/isnochys/reddit/reddit2tumbler && /home/isnochys/reddit/6env/bin/python /home/isnochys/reddit/reddit2tumbler/crawler.py
-#
 
 while getopts p:e:d: opt
 do
@@ -12,7 +7,7 @@ do
        p) pyth=$OPTARG;;
        e) pythscript=$OPTARG;;
        d) direct=$OPTARG;;
-	   ?) echo "Usage ($0) -p python -d directory -e pythonscript\n";;
+	   ?) echo "Usage ($0) -p python_executable -d source_directory -e pythonscript\n";;
    esac
 done
 logf=$direct/$pythscript.log
